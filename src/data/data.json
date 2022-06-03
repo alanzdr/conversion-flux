@@ -1,0 +1,692 @@
+{
+  "credetials": {
+    "name": "pontoweb-0-20",
+    "version": 1,
+    "seo": {
+      "title": "Ahgora Pontoweb - Dê o primeiro passo na gestão da sua equipe",
+      "description": "Conheça o Pacote Pontoweb, pacote de gestão de home empresas que querem dar o primeiro passo na gestão da sua equipe. ",
+      "icon": "https://pontoweb.net/app/favicon-32x32.png"
+    },
+    "logo": {
+      "src": "/assets/images/logo.svg",
+      "alt": "Pontoweb by ahgora",
+      "width": 294,
+      "height": 38
+    }
+  },
+  "theme": {
+    "primary": "#7F4CF4",
+    "secondary": "#7F4CF4",
+    "background": "#F6F6F6",
+    "textPrimary": "#5A5A5C",
+    "textSecondary": "#8B8B9B"
+  },
+
+  "questions": [
+    {
+      "key": "email",
+      "title": "Qual o seu e-mail?",
+      "type": "textfield",
+      "propagate": true,
+      "variant": "email"
+    },
+
+    {
+      "key": "cnpj",
+      "title": "Qual o CNPJ da sua empresa?",
+      "type": "textfield",
+      "propagate": true,
+      "variant": "cnpj"
+    },
+    {
+      "key": "useSystem",
+      "title": "Sua empresa já utiliza algum sistema de gestão de ponto?",
+      "type": "radio",
+      "responses": [
+        "Sim",
+        "Não"
+      ]
+    },
+
+    {
+      "key": "problemCurrent",
+      "title": "O atual sistema de gestão de ponto da sua empresa apresenta algum problema ou você sente falta de alguma funcionalidade?",
+      "type": "radio",
+      "responses": [
+        "Sim, faltam funcionalidades ou possuo problemas com meu atual sistema de gestão de ponto",
+        "Sim, não consigo exportar os dados do meu sistema",
+        "Sim, o relógio estragou",
+        "Não possuo nenhum problema com meu sistema de ponto atual, estou apenas buscando outras opções no mercado"
+      ]
+    },
+
+    {
+      "key": "missingFunction",
+      "title": "Você saberia dizer qual funcionalidade sente falta no sistema de gestão de ponto atual?",
+      "type": "radio",
+      "responses": [
+        "Sim",
+        "Não"
+      ]
+    },
+
+    {
+      "key": "missingFunctionDetail",
+      "title": "Qual funcionalidade você sente falta?",
+      "type": "textfield"
+    },
+
+    {
+      "key": "priorityLevel",
+      "title": "Resolver esse problema é uma prioridade para você?",
+      "type": "radio-range",
+      "responses": [
+        {
+          "title": "1",
+          "text": "Indiferente"
+        },
+        {
+          "title": "2",
+          "text": "Muito pouco"
+        },
+        {
+          "title": "3",
+          "text": "Pouco"
+        },
+        {
+          "title": "4",
+          "text": "Alta"
+        },
+        {
+          "title": "5",
+          "text": "Muito Alta"
+        }
+      ]
+    },
+
+    {
+      "key": "employees",
+      "title": "Qual o número de colaboradores da sua empresa?",
+      "type": "radio",
+      "responses": [
+        "1 - 10",
+        "11 - 20"
+      ]
+    },
+
+    {
+      "key": "decisionmaker",
+      "title": "Você é o decisor?",
+      "type": "radio",
+      "responses": [
+        "Sim",
+        "Não"
+      ]
+    },
+
+    {
+      "key": "registrationForm",
+      "title": "Você tem preferência pela forma de batida de ponto?",
+      "type": "radio-range",
+      "responses": [
+        {
+          "image": "/assets/images/relogio.png",
+          "title": "Sim",
+          "text": "Prefiro um relógio eletrônico de ponto"
+        },
+        {
+          "image": "/assets/images/ponto-online.png",
+          "title": "Sim",
+          "text": "Prefiro soluções alternativas de batida, como por aplicativo ou navegador"
+        },
+        {
+          "image": "/assets/images/nenhum.png",
+          "title": "Não",
+          "text": "Não tenho nenhuma preferência"
+        }
+      ]
+    },
+
+    {
+      "key": "problemForNotHaving",
+      "title": "Você atualmente possui algum problema em não ter um sistema de gestão de ponto na sua empresa?",
+      "type": "radio",
+      "responses": [
+        "Sim, já recebi uma notificação da Secretaria do Trabalho",
+        "Sim, possuo dificuldades em calcular horas extras e/ou banco de horas",
+        "Sim, passo muito tempo fechando a folha de pagamento",
+        "Sim, sempre encontro informações divergentes sobre a jornada dos meus colaboradores",
+        "Não, meu contador apenas sugeriu para que a empresa se enquadre à lei",
+        "Não, apenas busco uma inovação para a empresa"
+      ]
+    }
+  ],
+
+  "flows": [
+    {
+      "key": "flow-email",
+      "order": 0,
+      "question": "email",
+      "result": {
+        "default": "continue",
+        "next": "flow-cnpj",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-cnpj",
+      "order": 1,
+      "question": "cnpj",
+      "result": {
+        "default": "continue",
+        "next": "flow-start",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-start",
+      "order": 2,
+      "question": "useSystem",
+      "result": {
+        "default": "continue",
+        "next": "flow-left",
+        "exceptions": [
+          {
+            "response": "1",
+            "type": "continue",
+            "next": "flow-right"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-left",
+      "order": 3,
+      "question": "problemCurrent",
+      "result": {
+        "default": "continue",
+        "next": "flow-left-3",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "continue",
+            "next": "flow-left-1"
+          },
+          {
+            "response": "3",
+            "type": "continue",
+            "next": "flow-left-4"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-left-1",
+      "order": 4,
+      "question": "missingFunction",
+      "result": {
+        "default": "continue",
+        "next": "flow-left-2",
+        "exceptions": [
+          {
+            "response": "1",
+            "type": "continue",
+            "next": "flow-left-3"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-left-2",
+      "order": 5,
+      "question": "missingFunctionDetail",
+      "result": {
+        "default": "continue",
+        "next": "flow-left-3",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-left-3",
+      "order": 6,
+      "question": "priorityLevel",
+      "result": {
+        "default": "continue",
+        "next": "flow-left-4",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-left-4",
+      "order": 7,
+      "question": "employees",
+      "result": {
+        "default": "continue",
+        "next": "flow-left-0a10",
+        "exceptions": [
+          {
+            "response": "1",
+            "type": "continue",
+            "next": "flow-left-10a20"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-left-0a10",
+      "order": 7,
+      "question": "decisionmaker",
+      "result": {
+        "default": "continue",
+        "next": "flow-left-0a10-2",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-left-0a10-2",
+      "order": 10,
+      "question": "registrationForm",
+      "result": {
+        "default": "finished",
+        "next": "conclusion-02",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "finished",
+            "next": "conclusion-01"
+          }
+        ]
+      }
+    },
+
+    {
+      "key": "flow-left-10a20",
+      "order": 8,
+      "question": "decisionmaker",
+      "result": {
+        "default": "continue",
+        "next": "flow-left-10a20-2",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-left-10a20-2",
+      "order": 10,
+      "question": "registrationForm",
+      "result": {
+        "default": "finished",
+        "next": "conclusion-04",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "finished",
+            "next": "conclusion-03"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-right",
+      "order": 3,
+      "question": "problemForNotHaving",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-efficiency",
+        "exceptions": [
+          {
+            "response": ["0", "1"],
+            "type": "continue",
+            "next": "flow-right-legal"
+          },
+          {
+            "response": ["5"],
+            "type": "continue",
+            "next": "flow-right-innovation"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-right-legal",
+      "order": 4,
+      "question": "priorityLevel",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-legal-1",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-right-legal-1",
+      "order": 5,
+      "question": "employees",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-legal-0a10",
+        "exceptions": [
+          {
+            "response": "1",
+            "type": "continue",
+            "next": "flow-right-legal-10a20"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-right-legal-0a10",
+      "order": 6,
+      "question": "decisionmaker",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-legal-0a10-2",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-right-legal-0a10-2",
+      "order": 8,
+      "question": "registrationForm",
+      "result": {
+        "default": "finished",
+        "next": "conclusion-06",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "finished",
+            "next": "conclusion-05"
+          }
+        ]
+      }
+    },
+
+    {
+      "key": "flow-right-legal-10a20",
+      "order": 6,
+      "question": "decisionmaker",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-legal-10a20-2",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-right-legal-10a20-2",
+      "order": 8,
+      "question": "registrationForm",
+      "result": {
+        "default": "finished",
+        "next": "conclusion-08",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "finished",
+            "next": "conclusion-07"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-right-efficiency",
+      "order": 4,
+      "question": "priorityLevel",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-efficiency-1",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-right-efficiency-1",
+      "order": 5,
+      "question": "employees",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-efficiency-0a10",
+        "exceptions": [
+          {
+            "response": "1",
+            "type": "continue",
+            "next": "flow-right-efficiency-10a20"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-right-efficiency-0a10",
+      "order": 6,
+      "question": "decisionmaker",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-efficiency-0a10-2",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-right-efficiency-0a10-2",
+      "order": 8,
+      "question": "registrationForm",
+      "result": {
+        "default": "finished",
+        "next": "conclusion-10",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "finished",
+            "next": "conclusion-09"
+          }
+        ]
+      }
+    },
+
+    {
+      "key": "flow-right-efficiency-10a20",
+      "order": 6,
+      "question": "decisionmaker",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-efficiency-10a20-2",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-right-efficiency-10a20-2",
+      "order": 8,
+      "question": "registrationForm",
+      "result": {
+        "default": "finished",
+        "next": "conclusion-12",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "finished",
+            "next": "conclusion-11"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-right-innovation",
+      "order": 5,
+      "question": "employees",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-innovation-0a10",
+        "exceptions": [
+          {
+            "response": "1",
+            "type": "continue",
+            "next": "flow-right-innovation-10a20"
+          }
+        ]
+      }
+    },
+    {
+      "key": "flow-right-innovation-0a10",
+      "order": 6,
+      "question": "decisionmaker",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-innovation-0a10-2",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-right-innovation-0a10-2",
+      "order": 8,
+      "question": "registrationForm",
+      "result": {
+        "default": "finished",
+        "next": "conclusion-14",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "finished",
+            "next": "conclusion-13"
+          }
+        ]
+      }
+    },
+
+    {
+      "key": "flow-right-innovation-10a20",
+      "order": 6,
+      "question": "decisionmaker",
+      "result": {
+        "default": "continue",
+        "next": "flow-right-innovation-10a20-2",
+        "exceptions": []
+      }
+    },
+    {
+      "key": "flow-right-innovation-10a20-2",
+      "order": 8,
+      "question": "registrationForm",
+      "result": {
+        "default": "finished",
+        "next": "conclusion-16",
+        "exceptions": [
+          {
+            "response": "0",
+            "type": "finished",
+            "next": "conclusion-15"
+          }
+        ]
+      }
+    }
+  ],
+
+  "conclusions": [
+    {
+      "key": "conclusion-01",
+      "layout": {
+        "h3": "de 0 a 10 colaboradores",
+        "h4": "Batida de ponto por REP"
+      }
+    },
+    {
+      "key": "conclusion-02",
+      "layout": {
+        "h3": "de 0 a 10 colaboradores",
+        "h4": "Batida de ponto online"
+      }
+    },
+    {
+      "key": "conclusion-03",
+      "layout": {
+        "h3": "de 11 a 20 colaboradores",
+        "h4": "Batida de ponto por REP"
+      }
+    },
+    {
+      "key": "conclusion-04",
+      "layout": {
+        "h3": "de 11 a 20 colaboradores",
+        "h4": "Batida de ponto online"
+      }
+    },
+    {
+      "key": "conclusion-05",
+      "layout": {
+        "h3": "de 0 a 10 colaboradores",
+        "h4": "Batida de ponto por relógio eletrônico"
+      }
+    },
+    {
+      "key": "conclusion-06",
+      "layout": {
+        "h3": "de 0 a 10 colaboradores",
+        "h4": "Batida de ponto online"
+      }
+    },
+    {
+      "key": "conclusion-07",
+      "layout": {
+        "h3": "de 11 a 20 colaboradores",
+        "h4": "Batida de ponto por relógio eletrônico"
+      }
+    },
+    {
+      "key": "conclusion-08",
+      "layout": {
+        "h3": "de 11 a 20 colaboradores",
+        "h4": "Batida de ponto online"
+      }
+    },
+    {
+      "key": "conclusion-09",
+      "layout": {
+        "h3": "de 0 a 10 colaboradores",
+        "h4": "Batida de ponto por REP"
+      }
+    },
+    {
+      "key": "conclusion-10",
+      "layout": {
+        "h3": "de 0 a 10 colaboradores",
+        "h4": "Batida de ponto online"
+      }
+    },
+    {
+      "key": "conclusion-11",
+      "layout": {
+        "h3": "de 11 a 20 colaboradores",
+        "h4": "Batida de ponto por REP"
+      }
+    },
+    {
+      "key": "conclusion-12",
+      "layout": {
+        "h3": "de 11 a 20 colaboradores",
+        "h4": "Batida de ponto online"
+      }
+    },
+    {
+      "key": "conclusion-13",
+      "layout": {
+        "h3": "de 0 a 10 colaboradores",
+        "h4": "Batida de ponto por relógio biométrico"
+      }
+    },
+    {
+      "key": "conclusion-14",
+      "layout": {
+        "h3": "de 0 a 10 colaboradores",
+        "h4": "Batida de ponto online"
+      }
+    },
+    {
+      "key": "conclusion-15",
+      "layout": {
+        "h3": "de 11 a 20 colaboradores",
+        "h4": "Batida de ponto por relógio biométrico"
+      }
+    },
+    {
+      "key": "conclusion-16",
+      "layout": {
+        "h3": "de 11 a 20 colaboradores",
+        "h4": "Batida de ponto online"
+      }
+    }
+  ]
+}
